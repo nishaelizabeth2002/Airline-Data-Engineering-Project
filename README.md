@@ -1,53 +1,145 @@
 # Airline Data Engineering Project
 
-## Overview
+An end-to-end Data Engineering project built using **Databricks, PySpark, Delta Lake, SQL, and Unity Catalog**, following the **Medallion Architecture (Bronze → Silver → Gold)**.
 
-This project demonstrates an end-to-end Data Engineering pipeline built on Databricks using the Medallion Architecture (Bronze, Silver, Gold). Flight operations data is ingested, transformed, aggregated into business KPIs, validated through data quality checks, and visualized using interactive dashboards.
+---
 
-## Architecture
+# Project Overview
 
-Bronze Layer → Silver Layer → Gold Layer → SQL Analytics → Executive Dashboard
+This project demonstrates a complete Data Engineering pipeline that:
 
-- **Bronze:** Raw flight data ingestion
-- **Silver:** Data cleaning and transformation
-- **Gold:** Business KPI generation
-- **SQL Analytics:** Analytical queries and views
-- **Dashboard:** Executive KPI visualization
+- Ingests raw airline flight data into Databricks
+- Implements the Medallion Architecture (Bronze, Silver, Gold)
+- Cleans and validates data using PySpark
+- Generates business-ready KPI tables
+- Performs analytical reporting using SQL
+- Builds an Executive Dashboard
+- Tracks end-to-end data lineage using Unity Catalog
 
-## Technologies Used
+---
+
+# Architecture
+
+```
+                     Flight Delay CSV
+                            │
+                            ▼
+                  01_Bronze_Ingestion
+                            │
+                            ▼
+                  Bronze Delta Table
+                            │
+                            ▼
+               02_Silver_Transformation
+                            │
+                            ▼
+                  Silver Delta Table
+                            │
+                            ▼
+               03_Gold_Business_KPIs
+                            │
+     ┌────────────┬────────────┬────────────┬────────────┬────────────┐
+     ▼            ▼            ▼            ▼            ▼
+ Airline KPI   Route KPI  Delay Reason  Aircraft KPI  Cancellation KPI
+                            │
+                            ▼
+                  04_SQL_Analytics
+                            │
+                            ▼
+             05_Data_Quality_Checks
+                            │
+                            ▼
+              06_Executive_Dashboard
+```
+
+---
+
+# Medallion Architecture
+
+## Bronze Layer
+
+- Read raw CSV data
+- Store raw data in Delta format
+
+## Silver Layer
+
+- Remove duplicates
+- Validate records
+- Standardize data
+- Prepare clean datasets
+
+## Gold Layer
+
+Generate business-ready analytical tables for reporting and dashboards.
+
+---
+
+# Technologies Used
 
 - Databricks
-- Apache Spark (PySpark)
+- Apache Spark
+- PySpark
 - Spark SQL
 - Delta Lake
 - Unity Catalog
 - Databricks SQL Dashboard
 - GitHub
 
-## Project Structure
+---
+
+# Project Structure
 
 ```
-Airline-Data-Engineering-Project/
+Airline-Data-Engineering-Project
 │
-├── notebooks/
+├── README.md
+│
+├── notebooks
 │   ├── 01_Bronze_Ingestion.dbc
 │   ├── 02_Silver_Transformation.dbc
 │   ├── 03_Gold_Business_KPIs.dbc
 │   ├── 04_SQL_Analytics.dbc
 │   ├── 05_Data_Quality_Checks.dbc
 │   └── 06_Executive_Dashboard.dbc
+│
+└── screenshots
 ```
 
-## Pipeline Flow
+---
 
-1. Ingest raw airline flight data into Bronze tables.
-2. Clean and standardize records in the Silver layer.
-3. Generate business KPIs in the Gold layer.
-4. Build SQL views for analytical reporting.
-5. Create executive dashboards for business insights.
-6. Track end-to-end data lineage using Unity Catalog.
+# Databricks Workspace
 
-## Executive KPIs
+The project is organized into separate notebooks representing each stage of the ETL pipeline.
+
+![Project Structure](screenshots/project_structure.png)
+
+---
+
+# Executive Dashboard
+
+The dashboard provides business insights generated from the Gold layer.
+
+### Dashboard (Part 1)
+
+![Dashboard Part 1](screenshots/dashboard_1.png)
+
+### Dashboard (Part 2)
+
+![Dashboard Part 2](screenshots/dashboard_2.png)
+
+---
+
+# Unity Catalog Lineage
+
+The project uses Unity Catalog to track data lineage across the Medallion Architecture.
+
+![Unity Catalog Lineage](screenshots/Lineage.png)
+
+---
+
+# Business KPIs
+
+The project generates the following KPIs:
 
 - Average Delay by Airline
 - Flights by Delay Reason
@@ -55,23 +147,39 @@ Airline-Data-Engineering-Project/
 - Average Delay by Aircraft Type
 - Cancelled Flights by Airline
 
-## Skills Demonstrated
+---
 
-- Data Engineering
-- ETL Pipeline Development
+# Data Quality Checks
+
+Implemented validations include:
+
+- Duplicate record detection
+- Null value validation
+- Invalid route detection
+- Distance validation
+- Delay value validation
+
+---
+
+# Skills Demonstrated
+
+- End-to-End ETL Pipeline Development
 - Medallion Architecture
-- PySpark
+- PySpark Transformations
 - Spark SQL
 - Delta Lake
 - Data Quality Validation
 - Dashboard Development
-- Unity Catalog Lineage
+- Unity Catalog
+- Data Lineage
 - Git Version Control
 
-## Future Enhancements
+---
+
+# Future Enhancements
 
 - Streaming ingestion with Auto Loader
-- Scheduled pipeline orchestration
+- Incremental processing
+- Databricks Workflows orchestration
 - CI/CD deployment
-- Automated monitoring and alerting
 - Machine Learning-based delay prediction
